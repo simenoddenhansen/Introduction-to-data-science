@@ -1,0 +1,12 @@
+# Mac system files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.ipynb_checkpoints/
+
+# Data files (Exclude ALL of these to avoid crashes)
+data/
+*.csv
+*.zip
+*.xlsx
