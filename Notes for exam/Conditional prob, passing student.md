@@ -26,35 +26,36 @@ The challenge in your problem is that  (guesses) depends on  (knowns). You canno
 
 The total score is . The probability of a specific student outcome depends on both how many they knew () and how many they guessed ().
 
-* ****: Use `binom.pmf(n, 20, 11/20)`.
-* ****: If a student knows  answers, they must guess on the remaining  questions. To get a total score of , they need exactly  correct guesses.
-* **Formula**: `binom.pmf(y-n, 20-n, 0.5)`.
-
-
+* **:** Use `binom.pmf(n, 20, 11/20)`.
+* **:** If a student knows  answers, they must guess on the remaining  questions. To get a total score of , they need exactly  correct guesses.
+* **Formula:** `binom.pmf(y-n, 20-n, 0.5)`.
 
 ### Step 2: Construct a Joint Probability Matrix
 
 Instead of trying to find a closed-form equation, use Python to build a table (a 2D NumPy array or nested loops):
 
-1. Create a matrix where rows are  (0 to 20) and columns are  (0 to 20).
+1. Create a matrix where rows are  ( to ) and columns are  ( to ).
 2. Fill each cell  with the probability calculated in Step 1.
 
-> **Note:** If , the probability is 0 (you cannot have a total score lower than the number of answers you already know).
+> **Note:** If , the probability is  (you cannot have a total score lower than the number of answers you already know).
 
 ### Step 3: Solve for the Thresholds
 
 Once you have the matrix of probabilities , you can solve Part 1 and Part 2 by summing specific regions of this matrix.
 
-**For Part 1: **
+#### For Part 1: 
+
 Use the conditional probability formula:
+
 
 * **Numerator:** Sum the probabilities in your matrix where row index  and column index .
 * **Denominator:** Sum the probabilities in your matrix where column index  (regardless of ).
 
-**For Part 2**
+#### For Part 2
+
 Loop through possible  values and find the first one where .
 
-* *Hint:* .
+> **Hint:** .
 
 ---
 
@@ -109,3 +110,5 @@ for T in range(21):
 ```
 
 ---
+
+Would you like me to walk you through how to add a check to verify that the sum of all elements in your `joint_prob` matrix equals ?
