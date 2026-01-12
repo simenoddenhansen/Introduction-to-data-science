@@ -48,3 +48,72 @@ Would you like me to show you how to use these uniform numbers to generate a dif
 
 
 # Q: Implement a Linear Congruential Generator where you tested out a good combination (a large $M$ with $a,b$ satisfying the Hull-Dobell (Thm 6.8)) of parameters. Follow the instructions in the code block.Do this in python
+To implement a reliable Linear Congruential Generator (LCG), we must choose parameters that satisfy the **Hull-Dobell Theorem** to ensure the generator has a **full period** (it hits every integer between  and  before repeating).
+
+### The Hull-Dobell Theorem (Thm 6.8)
+
+According to the provided lecture notes, an LCG of the form  has a full period  if and only if:
+
+1. 
+ and  are relatively prime (their only common divisor is 1).
+
+
+2. Every prime factor of  divides .
+
+
+3. If 4 divides , then 4 also divides .
+
+
+
+### Implementation in Python
+
+The following implementation uses parameters often found in common libraries (like the glibc generator), which are specifically chosen to satisfy these conditions with a large .
+
+```python
+import time
+
+class LCG:
+    def __init__(self, seed=None):
+        # Parameters satisfying Hull-Dobell for a full period m:
+        # m is a power of 2 (2^31), a-1 is a multiple of 4, c is odd.
+        self.m = 2**31
+        self.a = 1103515245
+        self.c = 12345
+        
+        # Initialize seed with current time if not provided
+        if seed is None:
+            self.state = int(time.time()) % self.m
+        else:
+            self.state = seed % self.m
+
+    def next_int(self):
+        """Generates the next random integer in the sequence."""
+        self.state = (self.a * self.state + self.c) % self.m
+        return self.state
+
+    def next_float(self):
+        """Generates a pseudo-random float in the range [0, 1)."""
+        # Dividing by m maps the integer sequence to the Uniform(0, 1) distribution
+        return self.next_int() / self.m
+
+# --- Testing the Implementation ---
+# 1. Initialize the generator with a seed
+generator = LCG(seed=42)
+
+# 2. Generate a sequence of Uniform(0, 1) samples
+print("First 5 pseudo-random numbers in [0, 1):")
+for _ in range(5):
+    print(f"{generator.next_float():.6f}")
+
+# 3. Validation against Hull-Dobell conditions:
+# Condition 1: c (12345) and m (2^31) are relatively prime (12345 is odd).
+# Condition 2: The only prime factor of m is 2. (a-1) is 1103515244, which is even.
+# Condition 3: m is divisible by 4. (a-1) is also divisible by 4 (1103515244 / 4 = 275878811).
+
+```
+
+### Why this is useful
+
+The "point" of generating these uniform values is that they serve as the raw material for simulating more complex distributions. By applying the **Probability Integral Transform** (Inverse Transform Method), you can take these  values and transform them into samples from a Normal, Exponential, or any other distribution required for statistical analysis.
+
+Would you like me to extend this code to generate samples for a specific distribution, such as the **Exponential** distribution?
