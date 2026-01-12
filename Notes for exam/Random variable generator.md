@@ -1,3 +1,27 @@
+# Exam vB, PROBLEM 2
+
+**Maximum Points = 8**
+
+## Random variable generation and transformation
+
+The purpose of this problem is to show that you can implement your own sampler.  
+This will be built in the following three steps:
+
+1. **[2p]** Implement a Linear Congruential Generator where you tested out a good combination  
+   (a large \( M \) with \( a, b \) satisfying the Hull–Dobell (Thm 6.8)) of parameters.  
+   Follow the instructions in the code block.
+
+2. **[2p]** Using a generator, construct random numbers from the uniform \([0, 1]\) distribution.
+
+3. **[4p]** Using a uniform \([0, 1]\) random generator, generate samples from
+
+   \[
+   p_0(x) = \frac{\pi}{2} \lvert \sin(2\pi x) \rvert, \qquad x \in [0,1].
+   \]
+
+Using the **Accept–Reject sampler** (Algorithm 1 in TFDS notes) with sampling density given by the uniform \([0,1]\) distribution.
+
+
 # Random Variable Generation and Transformation: A Complete Guide
 
 This problem asks you to build a random number generation pipeline from scratch. You start with a raw mathematical generator (LCG), refine it into a standard Uniform $[0,1]$ generator, and finally use that to sample from a complex custom distribution using Rejection Sampling.
