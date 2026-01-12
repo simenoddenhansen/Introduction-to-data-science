@@ -1,3 +1,52 @@
+
+# Q: Give me the rundown of an LCG and implement it using python and the Hull Dobell theorem
+Linear Congruential Generators (LCG)1. The Purpose of LCGA Linear Congruential Generator is an algorithm that yields a sequence of pseudo-random numbers. Because computers are deterministic, they cannot generate truly random numbers without specialized hardware; instead, they use LCGs to simulate randomness for statistical experiments and simulations.The goal is to produce a sequence that is indistinguishable from a Uniform(0, 1) distribution. These uniform samples are the "raw material" used to generate more complex random variables (like Normal or Exponential) through the Inverse Transform Method.2. Mathematical DefinitionThe LCG is defined by the recursive formula:$$X_{n+1} = (aX_n + c) \mod m$$Where:$m$ is the modulus ($m > 0$).$a$ is the multiplier ($0 \le a < m$).$c$ is the increment ($0 \le c < m$).$X_0$ is the seed (the starting value).To get a number in the range $[0, 1)$, we calculate $U_n = \frac{X_n}{m}$.3. The Hull-Dobell Theorem (Theorem 6.8)To be considered a "good" generator, the LCG must have a full period. This means it should generate all $m$ possible values before the sequence repeats. According to the Hull-Dobell Theorem, an LCG has a full period $m$ if and only if:$c$ and $m$ are relatively prime (their only common divisor is 1).Every prime factor of $m$ divides $(a - 1)$.If 4 divides $m$, then 4 must also divide $(a - 1)$.4. Python ImplementationThe following code uses parameters ($m=2^{31}, a=1103515245, c=12345$) that satisfy the Hull-Dobell conditions.Pythonimport time
+
+class LCG:
+    """
+    Implementation of a Linear Congruential Generator.
+    Satisfies Hull-Dobell Theorem for a full period m.
+    """
+    def __init__(self, seed=None):
+        # Parameters chosen for a full period m=2^31:
+        self.m = 2**31
+        self.a = 1103515245
+        self.c = 12345
+        
+        # Hull-Dobell Check:
+        # 1. c (12345) is odd, m (2^31) is a power of 2. They are relatively prime.
+        # 2. Only prime factor of m is 2. (a-1) = 1103515244 is even (divisible by 2).
+        # 3. m is divisible by 4. (a-1) = 1103515244 is also divisible by 4.
+        
+        if seed is None:
+            self.state = int(time.time() * 1000) % self.m
+        else:
+            self.state = seed % self.m
+
+    def next_int(self):
+        """Update the state and return the next integer."""
+        self.state = (self.a * self.state + self.c) % self.m
+        return self.state
+
+    def next_uniform(self):
+        """Return the next pseudo-random number in [0, 1)."""
+        return self.next_int() / self.m
+
+# --- Testing the implementation ---
+if __name__ == "__main__":
+    rng = LCG(seed=123)
+    print("First 5 samples from Uniform(0, 1):")
+    for _ in range(5):
+        print(f"{rng.next_uniform():.6f}")
+
+
+
+
+
+
+
+
+
 # Q: Give me a short explanation of the point of LCG. Take into account the readings in order to explain it:
 
 A **Linear Congruential Generator (LCG)** is a widely used algorithm designed to produce a sequence of numbers that behave like a random sample from a  distribution. While computers are inherently deterministic and cannot generate "true" randomness without external hardware, LCGs provide **pseudo-random** numbers that are sufficient for most statistical simulations.
@@ -54,14 +103,13 @@ To implement a reliable Linear Congruential Generator (LCG), we must choose para
 
 According to the provided lecture notes, an LCG of the form  has a full period  if and only if:
 
-1. 
- and  are relatively prime (their only common divisor is 1).
+1. c and m are relatively prime (their only common divisor is 1).
 
 
-2. Every prime factor of  divides .
+2. Every prime factor of m divides .
 
 
-3. If 4 divides , then 4 also divides .
+3. If 4 divides m, then 4 also divides .
 
 
 
