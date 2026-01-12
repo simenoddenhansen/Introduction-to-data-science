@@ -1,10 +1,10 @@
-***Give me a short explanation of the point of LCG. Take into account the readings in order to explain it:***
+### Q: Give me a short explanation of the point of LCG. Take into account the readings in order to explain it:
 
 A **Linear Congruential Generator (LCG)** is a widely used algorithm designed to produce a sequence of numbers that behave like a random sample from a  distribution. While computers are inherently deterministic and cannot generate "true" randomness without external hardware, LCGs provide **pseudo-random** numbers that are sufficient for most statistical simulations.
 
 The "point" or primary utility of an LCG can be broken down into three main functions:
 
-### 1. Simulating Randomness Deterministically
+# 1. Simulating Randomness Deterministically
 
 The LCG uses a recursive mathematical formula to generate the next number in a sequence based on the current one:
 
@@ -16,7 +16,7 @@ The LCG uses a recursive mathematical formula to generate the next number in a s
 
 
 
-### 2. Reproducibility via "Seeds"
+# 2. Reproducibility via "Seeds"
 
 One of the most important aspects of LCGs in research is that they are **reproducible**.
 
@@ -27,7 +27,7 @@ One of the most important aspects of LCGs in research is that they are **reprodu
 
 
 
-### 3. Foundation for Complex Distributions
+# 3. Foundation for Complex Distributions
 
 The LCG typically produces integers between  and . By dividing these by , we get values  that are approximately .
 
@@ -41,3 +41,10 @@ The LCG typically produces integers between  and . By dividing these by , we get
 ---
 
 Would you like me to show you how to use these uniform numbers to generate a different distribution, like an **Exponential** or **Normal** distribution?
+
+
+
+
+
+
+### Q: Implement a Linear Congruential Generator where you tested out a good combination (a large $M$ with $a,b$ satisfying the Hull-Dobell (Thm 6.8)) of parameters. Follow the instructions in the code block.Do this in python
